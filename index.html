@@ -1,11 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rohan Shrestha</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rohan Shrestha</title>
+  <link rel="icon" type="image/png" href="Favicon.png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #FFFFED;
+      overflow: hidden;
+    }
+    @keyframes dotPulse {
+      0%, 80%, 100% { transform: scale(0); opacity: 0.3; }
+      40% { transform: scale(1); opacity: 1; }
+    }
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      animation: dotPulse 1.4s infinite ease-in-out;
+    }
+    .dot:nth-child(2) { animation-delay: -0.16s; }
+    .dot:nth-child(3) { animation-delay: -0.32s; }
+    #dvd-logo {
+      width: 200px;
+      height: 100px;
+      border-radius: 50%; /* oval shape */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 600;
+      color: #FFFFED;
+      background-color: #627669;
+      box-shadow: 0 0 10px #627669; /* retro glow */
+      position: absolute;
+    }
+  </style>
 </head>
 <body>
-    <h1>Hello World</h1>
+  <!-- Work in Progress Loader -->
+  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-4 z-10">
+    <h1 class="text-3xl font-semibold tracking-wide text-[#627669]">
+      Work in Progress
+    </h1>
+    <div class="flex gap-2">
+      <span class="dot bg-[#627669]"></span>
+      <span class="dot bg-[#627669]"></span>
+      <span class="dot bg-[#627669]"></span>
+    </div>
+  </div>
+  <!-- DVD Logo -->
+  <div id="dvd-logo">
+    <!-- Replace with your image if you want -->
+    <img src="dvd.png" class="w-1/2 h-1/2 object-cover rounded-full">
+  </div>
+  <script>
+    const logo = document.getElementById('dvd-logo');
+    const colors = ["#627669", "#FF6B6B", "#4ECDC4", "#556270", "#C7F464", "#FF6F91"];
+    let colorIndex = 0;
+    let x = Math.random() * (window.innerWidth - logo.offsetWidth);
+    let y = Math.random() * (window.innerHeight - logo.offsetHeight);
+    let dx = 3;
+    let dy = 3;
+    function moveLogo() {
+      x += dx;
+      y += dy;
+      if (x <= 0 || x + logo.offsetWidth >= window.innerWidth) {
+        dx = -dx;
+        colorIndex = (colorIndex + 1) % colors.length;
+        logo.style.backgroundColor = colors[colorIndex];
+        logo.style.boxShadow = `0 0 10px ${colors[colorIndex]}`;
+      }
+      if (y <= 0 || y + logo.offsetHeight >= window.innerHeight) {
+        dy = -dy;
+        colorIndex = (colorIndex + 1) % colors.length;
+        logo.style.backgroundColor = colors[colorIndex];
+        logo.style.boxShadow = `0 0 10px ${colors[colorIndex]}`;
+      }
+      logo.style.left = x + "px";
+      logo.style.top = y + "px";
+      requestAnimationFrame(moveLogo);
+    }
+    moveLogo();
+    window.addEventListener("resize", () => {
+      x = Math.min(x, window.innerWidth - logo.offsetWidth);
+      y = Math.min(y, window.innerHeight - logo.offsetHeight);
+    });
+  </script>
 </body>
 </html>
